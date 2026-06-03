@@ -1,0 +1,383 @@
+<?php 
+require_once('include/header.php');
+require_once('include/config.php');
+
+
+require_once('include/navbar.php');
+?>
+<head>
+<style>
+/* =========================================
+   MODAL (DESKTOP DEFAULT)
+========================================= */
+
+.modal-dialog {
+    max-width: 50%;
+    margin: 1.75rem auto;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+
+/* =========================================
+   MOBILE MODAL (ONLY ≤768px)
+========================================= */
+
+@media (max-width: 768px) {
+
+  #employeeModal .modal-dialog {
+    max-width: 95% !important;
+    margin: 10px auto;
+  }
+
+  #employeeModal .modal-content {
+    height: 90vh;
+  }
+
+  #employeeModal .modal-body {
+    max-height: calc(90vh - 120px);
+    overflow-y: auto;
+    padding: 12px;
+  }
+
+  #employeeModal .modal-title {
+    font-size: 18px;
+  }
+}
+
+
+/* =========================================
+   TABLE STYLING
+========================================= */
+
+#userTable {
+    border: 2px solid #ddd !important;
+}
+
+#userTable th,
+#userTable td {
+    border: 1px solid #ddd !important;
+}
+
+#userTable tbody tr:nth-child(odd) {
+    background: #fbdede !important;
+}
+
+/* Smaller search box */
+.dataTables_filter input {
+    width: 150px;
+    height: 28px;
+    font-size: 13px;
+    padding: 4px 8px;
+}
+
+
+.dataTables_wrapper {
+    padding-right: 15px;
+}
+
+/* Make Client Name column wider */
+#userTable th:nth-child(2),
+#userTable td:nth-child(2) {
+    width: 180px !important;
+}
+
+/* =========================================
+   MOBILE ONLY – ENABLE HORIZONTAL SCROLL
+========================================= */
+
+@media screen and (max-width: 768px) {
+
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    .dataTables_wrapper {
+        overflow-x: auto !important;
+    }
+
+    /* Force table wider than screen */
+  
+
+   
+       #userTable {
+        min-width: 900px;   /* force wider table */
+    }
+
+    #userTable th,
+    #userTable td {
+        white-space: nowrap;
+    }
+
+    /* Scrollbar style */
+    .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+}
+
+
+/* =========================================
+   DESKTOP ONLY – NO HORIZONTAL SCROLL
+========================================= */
+
+@media screen and (min-width: 769px) {
+
+
+
+    .table-responsive,
+.dataTables_wrapper {
+    overflow-x: visible !important;
+}
+
+    #userTable {
+        min-width: 100%;
+        table-layout: fixed;
+    }
+
+    #userTable th,
+    #userTable td {
+        white-space: normal;
+    }
+}
+
+</style>
+
+</head>
+ <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="text-center"><b>Machine details</b></h5>                  
+                        
+                    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+        <?php 
+      $sql = "
+SELECT m.*, p.sale_ord_no 
+FROM machines m
+LEFT JOIN projects p ON m.project_name = p.project_name
+WHERE m.client_name IS NOT NULL AND TRIM(m.client_name) <> ''
+";
+$result = mysqli_query($conn, $sql);
+
+
+        if ($result) {
+
+           echo "<table class='table table-bordered' id='userTable' 
+        cellspacing='0' 
+        style='border:2px solid #ddd; width:100%;'>";
+
+echo "
+<thead style='background:#dbe5ec; border:1px solid #ddd;'>
+    <tr>
+        <th style='border:1px solid #ddd; width:7%;'>Sr. No</th>
+
+        <th style='border:1px solid #ddd; width:20%;'>Client Name</th>
+
+        <th style='border:1px solid #ddd; width:10%;'>SO Number</th>
+
+        <th style='border:1px solid #ddd; width:10%;'>Machine ID</th>
+
+        <th style='border:1px solid #ddd; width:10%;'>City</th>
+
+        <th style='border:1px solid #ddd; width:9%;'>Entry Fee</th>
+
+        <th style='border:1px solid #ddd; width:10%;'>Mode</th>
+
+        <th style='border:1px solid #ddd; width:24%; white-space:nowrap;'>Action</th>
+    </tr>
+</thead>
+<tbody>";
+
+            
+            $srNo = 1;
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $id = $row['id'];
+                $machine_id = $row['machine_id'];
+              $client_name   = $row['client_name'];
+              $project_name   = $row['project_name'];
+               $sale_ord_no = $row['sale_ord_no']; 
+              $city   = $row['city'];
+              $uses_amt   = $row['uses_amt'];
+
+                 /* -------- MODE LOGIC -------- */
+        $modes = [];
+
+        if ($row['free'] === 'Yes') {
+            $modes[] = 'BUTTON';
+        }
+        if ($row['coin'] === 'Yes') {
+            $modes[] = 'COIN';
+        }
+        if ($row['upi'] === 'Yes') {
+            $modes[] = 'UPI';
+        }
+        if ($row['smart_card'] === 'Yes') {
+            $modes[] = 'SMART CARD';
+        }
+        if ($row['digital_token'] === 'Yes') {
+            $modes[] = 'DIGITAL TOKEN';
+        }
+
+        $modeText = implode(', ', $modes);
+        /* ---------------------------- */
+
+
+/* -------- ENTRY FEE LOGIC -------- */
+if ($row['free'] === 'Yes') {
+    $entryFeeText = 'Button';
+} else {
+    $entryFeeText = '₹' . $uses_amt;
+}
+/* ------------------------------- */
+
+
+
+                echo "<tr>
+                        <td>$srNo</td>
+                        <td>$client_name</td>
+                        <td>$sale_ord_no</td>
+                        <td>$machine_id</td>
+                        <td>$city</td>
+                        <td>$entryFeeText</td>
+
+                        <td>$modeText</td>
+
+                        
+                        <td>
+    <div style='display:flex; gap:8px;'>
+
+        <a href='#' class='btn btn-sm btn-info edit-employee' 
+           data-toggle='modal' data-target='#employeeModal' 
+           data-updateid='$id' title='Update'>
+            <i class='fas fa-edit'></i>
+        </a>
+
+        <form action='qr_machine.php' method='POST' style='display:inline;'>
+            <input type='hidden' name='id' value='$id'>
+            <input type='hidden' name='machineid' value='$machine_id'>
+            <input type='hidden' name='amt' value='$uses_amt'>
+            <button type='submit' class='btn btn-dark btn-sm' 
+                    style='background-color:#6f42c1; border:none;' 
+                    title='Show Barcode'>
+                <i class='fas fa-qrcode'></i> 
+            </button>
+        </form>
+
+        <a href='#' class='btn btn-sm btn-primary view-employee'
+           data-toggle='modal' data-target='#employeeModal'
+           data-id='$id' title='View'>
+            <i class='fas fa-eye'></i>
+        </a>
+
+        <a href='delete_machine.php?deleteid=$id' 
+           class='btn btn-sm btn-danger' title='Delete'
+           onclick=\"return confirm('Are you sure, you want to delete?')\">
+            <i class='fas fa-trash'></i>
+        </a>
+
+        <!-- CURRENT STATUS BUTTON -->
+        <a href='machine_status.php?machine_id=$machine_id' 
+           class='btn btn-sm btn-success' title='Current Status'>
+            <i class='fas fa-info-circle'></i>
+        </a>
+
+    </div>
+</td>
+
+                    </tr>";
+                $srNo++;
+            }
+            echo "</tbody></table>";
+            mysqli_free_result($result);
+        }
+        mysqli_close($conn);
+        ?>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Machines Details</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="employeeDetails"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<?php include('include/scripts.php');?>
+<?php include('include/footer.php');?>
+
+
+
+<!-- DataTable -->
+<script src="js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function() {
+
+    $('#userTable').DataTable();
+    
+
+    // Edit
+    $(document).on("click", ".edit-employee", function () {
+        let id = $(this).data("updateid");
+        $.get("edit_machine.php", { updateid: id }, function(data){
+            $("#employeeDetails").html(data);
+        });
+    });
+
+    // View
+    $(document).on("click", ".view-employee", function () {
+        let id = $(this).data("id");
+        $.get("view_machine.php", { id:id }, function(data){
+            $("#employeeDetails").html(data);
+        });
+    });
+
+});
+
+</script>

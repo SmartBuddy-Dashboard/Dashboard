@@ -1,0 +1,281 @@
+:root {
+    --bg-main: #f8f9fc;
+    --bg-card: #ffffff;
+    --text-main: #5a5c69;
+    --text-muted: #858796;
+    --border-color: #e3e6f0;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #5a5c69;
+    --topbar-bg: #ffffff;
+    --primary-color: #4e73df;
+    --primary-hover: #2e59d9;
+    --card-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+    --input-bg: #ffffff;
+    --input-border: #d1d3e2;
+}
+
+[data-theme="dark"] {
+    --bg-main: #131722;
+    --bg-card: #1e2638;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border-color: #2d3748;
+    --sidebar-bg: #0f131c;
+    --sidebar-text: #e2e8f0;
+    --topbar-bg: #0f131c;
+    --primary-color: #20c997;
+    --primary-hover: #17a589;
+    --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    --input-bg: #131722;
+    --input-border: #2d3748;
+}
+
+body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Overrides for SB Admin 2 */
+#wrapper #content-wrapper {
+    background-color: var(--bg-main) !important;
+}
+
+/* Fix stark white footer and bg-white classes */
+html[data-theme="dark"] .bg-white,
+html[data-theme="dark"] footer.sticky-footer {
+    background-color: var(--bg-card) !important;
+    color: var(--text-muted) !important;
+}
+
+.card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--card-shadow) !important;
+    border-radius: 12px !important;
+}
+
+.card-header {
+    background-color: var(--bg-card) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+}
+
+.sidebar {
+    background-color: var(--sidebar-bg) !important;
+    background-image: none !important;
+}
+
+.sidebar .nav-item .nav-link {
+    color: var(--sidebar-text) !important;
+}
+
+.sidebar .nav-item .nav-link i {
+    color: var(--text-muted) !important;
+}
+.sidebar .nav-item.active .nav-link {
+    color: var(--primary-color) !important;
+}
+.sidebar .nav-item.active .nav-link i {
+    color: var(--primary-color) !important;
+}
+.sidebar-divider {
+    border-top: 1px solid var(--border-color) !important;
+}
+
+.topbar {
+    background-color: var(--topbar-bg) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.topbar .nav-item .nav-link {
+    color: var(--text-main) !important;
+}
+
+/* Modals */
+.modal-content {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color);
+}
+.modal-header, .modal-footer {
+    border-color: var(--border-color) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, .text-gray-800 {
+    color: var(--text-main) !important;
+}
+.text-gray-900 { color: var(--text-main) !important; }
+.text-gray-600 { color: var(--text-muted) !important; }
+
+/* Tables */
+table.dataTable, table {
+    color: var(--text-main) !important;
+}
+.table td, .table th {
+    border-top: 1px solid var(--border-color) !important;
+}
+.table thead th {
+    border-bottom: 2px solid var(--border-color) !important;
+}
+
+/* Fix DataTables Row Backgrounds in Dark Mode */
+html[data-theme="dark"] table.dataTable tbody tr,
+html[data-theme="dark"] table.dataTable tbody tr.odd,
+html[data-theme="dark"] table.dataTable tbody tr.even,
+html[data-theme="dark"] table.dataTable tbody td.dataTables_empty {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+}
+html[data-theme="dark"] table.dataTable tbody tr:hover {
+    background-color: var(--bg-main) !important;
+}
+
+/* Dropdowns */
+.dropdown-menu {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+}
+.dropdown-item {
+    color: var(--text-main) !important;
+}
+.dropdown-item:hover {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+}
+.theme-toggle-btn:hover {
+    color: var(--text-main);
+}
+
+/* Forms */
+.form-control {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--text-main) !important;
+}
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(32, 201, 151, 0.25) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+
+/* =========================================================
+   NEW DARK MODE CONTRAST FIXES (Sidebar, Tables, Pagination, Modals)
+========================================================= */
+
+/* Sidebar Sub-menus */
+html[data-theme="dark"] .collapse-inner.bg-white {
+    background-color: var(--bg-card) !important;
+}
+html[data-theme="dark"] .collapse-item {
+    color: var(--text-main) !important;
+}
+html[data-theme="dark"] .collapse-item:hover {
+    background-color: var(--bg-main) !important;
+    color: var(--primary-color) !important;
+}
+html[data-theme="dark"] .collapse-header {
+    color: var(--text-muted) !important;
+}
+
+/* DataTables Text & Pagination */
+html[data-theme="dark"] .dataTables_info,
+html[data-theme="dark"] .dataTables_length,
+html[data-theme="dark"] .dataTables_length label,
+html[data-theme="dark"] .dataTables_filter,
+html[data-theme="dark"] .dataTables_filter label {
+    color: var(--text-main) !important;
+}
+html[data-theme="dark"] .page-link {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+html[data-theme="dark"] .page-item.disabled .page-link {
+    background-color: var(--bg-main) !important;
+    color: var(--text-muted) !important;
+    border-color: var(--border-color) !important;
+}
+html[data-theme="dark"] .page-item.active .page-link {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+/* All Tables inside Dark Theme (including Modals) */
+html[data-theme="dark"] .table {
+    color: var(--text-main) !important;
+}
+html[data-theme="dark"] .table th,
+html[data-theme="dark"] .table td {
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+html[data-theme="dark"] table.dataTable tbody tr {
+    background-color: var(--bg-card) !important;
+}
+
+/* Modals */
+html[data-theme="dark"] .modal-content {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+}
+html[data-theme="dark"] .modal-header,
+html[data-theme="dark"] .modal-footer {
+    border-color: var(--border-color) !important;
+}
+html[data-theme="dark"] .modal-title {
+    color: var(--text-main) !important;
+}
+html[data-theme="dark"] .close {
+    color: var(--text-main) !important;
+    text-shadow: none;
+    opacity: 0.8;
+}
+html[data-theme="dark"] .close:hover {
+    color: #fff !important;
+    opacity: 1;
+}
+
+/* Custom Dropdown Styling for Profile */
+.dropdown-body-custom {
+    background-color: var(--bg-card) !important;
+}
+.dropdown-item-logout {
+    transition: all 0.2s;
+    background-color: transparent !important;
+    color: #e74a3b !important;
+}
+html[data-theme="dark"] .dropdown-item-logout {
+    color: #ff6b6b !important;
+}
+html[data-theme="dark"] .dropdown-item-logout:hover {
+    background-color: rgba(231, 74, 59, 0.1) !important;
+}

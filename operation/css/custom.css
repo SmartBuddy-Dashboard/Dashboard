@@ -1,0 +1,40 @@
+h6.pie-chart-head{
+	margin: 20px;
+	 background-color:#afa9a9; 
+	 padding: 8px; 
+	 color:black;
+}
+/* Bulletproof modal text color for Dark Theme */
+html[data-theme="dark"] .modal-body {
+    color: #ffffff !important;
+}
+html[data-theme="dark"] .modal-body table,
+html[data-theme="dark"] .modal-body th,
+html[data-theme="dark"] .modal-body td {
+    color: #ffffff !important;
+    border-color: #4a5568 !important;
+}
+html[data-theme="dark"] .modal-body h1,
+html[data-theme="dark"] .modal-body h2,
+html[data-theme="dark"] .modal-body h3,
+html[data-theme="dark"] .modal-body h4,
+html[data-theme="dark"] .modal-body h5,
+html[data-theme="dark"] .modal-body h6 {
+    color: #ffffff !important;
+}
+
+/* Custom Dropdown Styling for Profile */
+.dropdown-body-custom {
+    background-color: var(--bg-card) !important;
+}
+.dropdown-item-logout {
+    transition: all 0.2s;
+    background-color: transparent !important;
+    color: #e74a3b !important;
+}
+html[data-theme="dark"] .dropdown-item-logout {
+    color: #ff6b6b !important;
+}
+html[data-theme="dark"] .dropdown-item-logout:hover {
+    background-color: rgba(231, 74, 59, 0.1) !important;
+}
